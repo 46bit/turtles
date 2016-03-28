@@ -1,10 +1,8 @@
 local tArgs = { ... }
 
--- Excavates holes with a mining turtle.
 --   pastebin get V2pQK64w github
---   github get 46bit turtles master bit_excavate.lua bit_excavate
---   bit_excavate 6 15 10
--- Digs a 6-wide, 15-deep hole in a line 10 times, forming a 6-wide 60-long 15-deep chamber.
+--   github get 46bit turtles develop test1.lua test1
+--   test1
 
 -- x,z are on the horizontal plane
 -- y is vertical
@@ -362,109 +360,30 @@ local function printInventoryNames()
 end
 
 -- Actual turtle code
-if #tArgs < 2 or #tArgs > 3 then
-  print("Usage: bit_excavate <width (multiple of 2)> <depth (multiple of 3)> [<pits>]")
-  return
+
+forward(5)
+
+local function square()
+  right()
+  forward(3)
+  right()
+  forward(3)
+  right()
+  forward(3)
 end
 
-local width = tonumber(tArgs[1])
-local depth = tonumber(tArgs[2])
-local pits = 1
-if #tArgs >= 3 then
-  pits = tonumber(tArgs[3])
-end
-if width < 1 then
-  print("Width of pit must be a positive number.")
-  return
-end
-if depth < 1 or depth % 3 ~= 0 then
-  print("Depth of pit must be a positive multiple of 3.")
-  return
-end
-if pits < 1 then
-  print("Number of pits must be a positive number.")
-  return
-end
+resumeAfter(square)
 
--- Place in top-left block to be excavated.
--- width is the block cross-section of the pit.
--- depth is the block depth of the pit.
-
-local runs = depth / 3
-local inner = width - 1
-
--- Wind into center of run.
-local function windIn(p, r)
-  -- For all but the first wind in we must start by turning right.
-  if r > 1 then
-    right()
-  end
-
-  forward(inner, true, true)
-  for d = inner,1,-1 do
-    --dropAllExcept(???)
-    if shouldUnloadInventory(true) then
-      resumeAfter(goDepositInventory)
-    end
-
-    right()
-    forward(d, true, true)
-    right()
-    forward(d, true, true)
-  end
-end
-
--- Wind to outside of run.
-local function windOut(p, r)
-  -- For even-width runs we must turn right at the start of winding out.
-  if width % 2 == 0 then
-    right()
-  end
-
-  for d=1,inner do
-    --dropAllExcept(???)
-    if shouldUnloadInventory(true) then
-      resumeAfter(goDepositInventory)
-    end
-
-    forward(d, true, true)
-    right()
-    forward(d, true, true)
-    right()
-  end
-  forward(inner, true, true)
-end
-
-for p = 1,pits do
-  -- Go to start of pit.
-  moveTo({width*(p-1), 0, 0}, east)
-
-  local runWind = "in"
-  for r = 1,runs do
-    print("pit=" .. p .. " run=" .. r .. " winding=" .. runWind)
-
-    -- Go to middle layer of 3-block high run and clear a 3-high passageway.
-    down()
-    turtle.digUp()
-    turtle.digDown()
-
-    -- Alternate winding in then back out.
-    if runWind == "in" then
-      windIn(p, r)
-      runWind = "out"
-    else
-      windOut(p, r)
-      runWind = "in"
-    end
-
-    if r ~= runs then
-      -- Go to top layer of next run.
-      down(2)
-    end
-  end
-
-  -- Return to start and deposit inventory at end of each run.
-  moveTo({0, 0, 0}, west)
-  unload(true)
-  turnTo(east)
-end
+left()
+forward(5)
+resumeAfter(goDepositInventory)
+forward(3)
+left()
+forward()
+right()
+forward()
+right()
+forward()
+moveTo({0, 0, 0}, west)
+unload(true)
+turnTo(east)
