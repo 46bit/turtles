@@ -425,7 +425,6 @@ for p = 1,pits do
 
   for r = 1,runs do
     print("pit=" .. p .. " run=" .. r .. " winding=" .. runWind)
-    listInventoryNames()
 
     -- Go to middle layer of 3-block high run.
     down()
