@@ -416,13 +416,13 @@ end
 
 local runs = depth / 3
 local inner = width - 1
-local runWind = "in"
 
 for p = 1,pits do
   if p > 1 then
     moveTo({width*(p-1), 0, 0}, east)
   end
 
+  local runWind = "in"
   for r = 1,runs do
     print("pit=" .. p .. " run=" .. r .. " winding=" .. runWind)
 
