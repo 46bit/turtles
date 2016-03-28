@@ -471,6 +471,7 @@ for p = 1,pits do
       down()
     end
   end
-  goHome()
+  moveTo({0, 0, 0}, west)
   unload(true)
+  turnTo(east)
 end
