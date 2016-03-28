@@ -2,9 +2,9 @@ local tArgs = { ... }
 
 -- Excavates holes with a mining turtle.
 --   pastebin get V2pQK64w github
---   github get 46bit turtles master bit_excavate.lua bit_excavate
---   bit_excavate 6 15 10
--- Digs a 6-wide, 15-deep hole in a line 10 times, forming a 6-wide 60-long 15-deep chamber.
+--   github get 46bit turtles develop bit_excavate_dropping.lua bit_excavate_dropping
+--   bit_excavate_dropping 16 15 3
+-- Digs a 16-wide, 15-deep hole in a line 3 times, forming a 6-wide 60-long 15-deep chamber.
 
 -- x,z are on the horizontal plane
 -- y is vertical
